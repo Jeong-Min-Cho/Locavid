@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:locavid/delayed_animation.dart';
 import 'package:locavid/signin.dart';
 import 'package:locavid/mainmenu.dart';
-
+import 'package:locavid/loading.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -13,6 +14,8 @@ void main() {
       '/': (context) => MyApp(),
       '/signin': (context) => LoginScreen(),
       '/mainmenu': (context) => MapSample(),
+      '/loading': (context) => Loading(),
+      
     },
   ));
 }
@@ -40,6 +43,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       });
     super.initState();
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +87,14 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                         elevation: 8.0,
                         shape: CircleBorder(),
                         child: CircleAvatar(
-                          backgroundColor: Colors.grey[100],
-                          child: FlutterLogo(
-                            size: 50.0,
-                          ),
+                          backgroundColor: Colors.blueAccent[200], //grey[100]
+                          child: Image(
+                            image: AssetImage('assets/logos/locavid_logo.png')
+                            ),
                           radius: 50.0,
                         )),
                   ),
-                 //long Image(image: AssetImage('assets/logos/locavid_logo.png')),
+                  
                   DelayedAnimation(
                     child: Text(
                       "Locavid",
@@ -149,7 +156,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blueAccent,
                               ),
-                              ), onPressed: () {
+                              ), onPressed: () async {
+                                
+                                await Navigator.pushNamed(context, '/loading');
                                 Navigator.pushNamed(context, '/signin');
 
                               },
@@ -176,7 +185,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           )
           ),
     );
+
   }
+
+  
 
   Widget get _animatedButtonUI => Container(
         height: 60,

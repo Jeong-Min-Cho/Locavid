@@ -128,9 +128,10 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => {
-          Navigator.pushNamed(context, '/mainmenu'),
-          print('Login Button Pressed2')
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/loading');
+          Navigator.pushNamed(context, '/mainmenu');
+          print('Login Button Pressed2');
 
         },
         padding: EdgeInsets.all(15.0),
@@ -278,21 +279,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 40.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    
                     children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Container(
+                        padding: EdgeInsets.all(30),
+                        child:
+                        Image(
+                            image: AssetImage('assets/logos/locavid_logo.png'),
+                            ),
                       ),
-                      SizedBox(height: 30.0),
+                      // Text(
+                      //   'Sign In',
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontFamily: 'OpenSans',
+                      //     fontSize: 30.0,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      //SizedBox(height: 10.0),
                       _buildEmailTF(),
                       SizedBox(
                         height: 30.0,
@@ -301,9 +310,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
+                     // _buildSignInWithText(),
+                     // _buildSocialBtnRow(),
+                     // _buildSignupBtn(),
                     ],
                   ),
                 ),
