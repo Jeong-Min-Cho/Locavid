@@ -17,14 +17,19 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  Set<Marker> markers = Set();
+  Set<Marker> markers = {};
   // this will hold the generated polylines
   final Set<Polyline> polyline = {};
 
   Completer<GoogleMapController> _controller = Completer();
 
   //GoogleMapController _controller2;
+
+  List<List<LatLng>> routesCollection;
+
   List<LatLng> routeCoords;
+  List<LatLng> routeCoords2;
+  List<LatLng> routeCoords3;
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
 
@@ -33,12 +38,54 @@ class MapSampleState extends State<MapSample> {
         origin: LatLng(38.833799, -77.313717),
         destination: LatLng(38.756273, -77.523046),
         mode: RouteMode.driving);
+
+    routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: LatLng(38.756273, -77.523046),
+        destination: LatLng(38.771544, -77.506261),
+        mode: RouteMode.driving);
+    //38.771544, -77.506261 - Mannassas mall
+
+    routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: LatLng(38.771544, -77.506261),
+        destination: LatLng(38.836880, -77.438502),
+        mode: RouteMode.driving);
+
+
+    //38.836880, -77.438502 centreville plaza
+
+    //routesCollection.add(routeCoords);
+    //routesCollection.add(routeCoords2);
+
+    // markers.add(Marker(
+    //       markerId: MarkerId('testlocation'),
+    //       position: LatLng(38.756273, -77.523046),
+    //       onTap: () {}));
   }
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    getsomePoints();
+    await getsomePoints();
+
+    //38.771544, -77.506261 - Mannassas mall
+
+    Marker resultMarker = Marker(
+      markerId: MarkerId('testt'),
+      infoWindow: InfoWindow(
+          title: "GMU Manassas Campus", snippet: "Stayed: 3 hour(s)"),
+      position: LatLng(38.836880, -77.438502),
+    );
+
+    markers.add(resultMarker);
+
+    Marker resultMarker2 = Marker(
+      markerId: MarkerId('testt'),
+      infoWindow: InfoWindow(
+          title: "Mannassas mall", snippet: "Stayed: 2 hour(s)"),
+      position: LatLng(38.771544, -77.506261),
+    );
+
+    markers.add(resultMarker2);
   }
 
   static final CameraPosition _gmuLocation = CameraPosition(
@@ -157,6 +204,15 @@ class MapSampleState extends State<MapSample> {
                 points: routeCoords,
                 width: 4,
                 color: Colors.blue,
+                startCap: Cap.roundCap,
+                endCap: Cap.buttCap));
+
+            polyline.add(Polyline(
+                polylineId: PolylineId('route2'),
+                visible: true,
+                points: routeCoords2,
+                width: 4,
+                color: Colors.red,
                 startCap: Cap.roundCap,
                 endCap: Cap.buttCap));
           });
