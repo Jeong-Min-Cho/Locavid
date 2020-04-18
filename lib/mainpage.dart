@@ -11,8 +11,6 @@ import 'package:google_map_polyline/google_map_polyline.dart';
 
 import 'package:extended_navbar_scaffold/extended_navbar_scaffold.dart';
 
-import 'package:Flutter-FFNavigationBar/ff_navigation_bar.dart';
-
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
@@ -21,8 +19,7 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   Set<Marker> markers = {};
   // this will hold the generated polylines
-
-  Set<Polyline> polyline = {};
+  final Set<Polyline> polyline = {};
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -33,9 +30,33 @@ class MapSampleState extends State<MapSample> {
   List<LatLng> routeCoords;
   List<LatLng> routeCoords2;
   List<LatLng> routeCoords3;
-
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
+
+
+  void _showAlert(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Info'),
+          content: Text("This app tracks your location,"
+              " but your data will not public until you have tested positive "
+              "for the virus. If you don't want the app to track your location"
+              " in specific locaitons, "
+              "please press the do don't track here button."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        )
+    );
+//    Navigator.pop(context);
+  }
+
 
   getsomePoints() async {
     routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
@@ -53,7 +74,7 @@ class MapSampleState extends State<MapSample> {
    // routeCoords3.addAll([LatLng(38.833799, -77.313717), LatLng(38.756273, -77.523046)]);
     //routeCoords3.ad
    // routeCoords3.add(LatLng(38.756273, -77.523046));
-    
+
 
     routeCoords3 = await googleMapPolyline.getCoordinatesWithLocation(
         origin: LatLng(38.771544, -77.506261),
@@ -75,9 +96,13 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     super.initState();
 
+    // Call the initial alert on page build
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _showAlert(context));
+
     getsomePoints();
 
-  
+
     Marker resultMarker = Marker(
       markerId: MarkerId('testt2'),
       infoWindow: InfoWindow(
@@ -96,7 +121,7 @@ class MapSampleState extends State<MapSample> {
 
     markers.add(resultMarker2);
 
-    
+
 
     // Marker resultMarker0 = Marker(
     //   markerId: MarkerId('testt1'),
@@ -122,9 +147,45 @@ class MapSampleState extends State<MapSample> {
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
+  var dontTrackButton = (
+      Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.blue,
+          onPressed: () {},
+          label: Text("Don't track here"),
+          heroTag: null,
+        ),
+      )
+  );
+
+  var testedPositiveButton = (
+      Container(
+        margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+        child: FloatingActionButton.extended(
+          heroTag: null,
+          backgroundColor: Colors.red,
+          onPressed: () {},
+          label: Text("Tested Positive")
+        ),
+      )
+  );
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: testedPositiveButton,
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: dontTrackButton
+          ),
+        ],
+      ),
       body: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: _gmuLocation,
@@ -146,15 +207,10 @@ class MapSampleState extends State<MapSample> {
             //     startCap: Cap.roundCap,
             //     endCap: Cap.buttCap));
 
-            
+
           });
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('My Location'),
-        icon: Icon(Icons.data_usage),
-      ),
+      )
     );
   }
 
@@ -239,7 +295,7 @@ class MapSampleState extends State<MapSample> {
           onTap: () => popup()));
 
 
-          
+
 
             polyline.add(Polyline(
                         polylineId: PolylineId('route3'),
