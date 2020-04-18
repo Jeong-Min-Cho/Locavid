@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "159434117783",
+    "firebase_url": "https://locavid-flutter.firebaseio.com",
+    "project_id": "locavid-flutter",
+    "storage_bucket": "locavid-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159434117783:android:cd87a6774599b92be84fd2",
+        "android_client_info": {
+          "package_name": "com.wehack.locavid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159434117783-4a6sbbc79h9cq5225eovol738psqpqgo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJvzAz3CRxViIMOfH1e5v8iEVvBxzx454"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159434117783-4a6sbbc79h9cq5225eovol738psqpqgo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
