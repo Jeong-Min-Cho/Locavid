@@ -27,6 +27,8 @@ dependencies:
 
   flutter_polyline_points: ^0.1.0
 
+  extended_navbar_scaffold: any
+
   google_map_polyline:
 
   # dummy package to test https://github.com/NearHuscarl/flutter_login/issues/35

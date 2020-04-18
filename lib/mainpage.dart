@@ -9,6 +9,9 @@ import 'package:location/location.dart';
 
 import 'package:google_map_polyline/google_map_polyline.dart';
 
+import 'package:extended_navbar_scaffold/extended_navbar_scaffold.dart';
+
+
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
@@ -63,7 +66,93 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new ExtendedNavigationBarScaffold(
+        elevation: 0,
+  floatingAppBar: true,
+  appBar: AppBar(
+    shape: kAppbarShape,
+    leading: IconButton(
+      icon: Icon(
+        Icons.data_usage,
+        color: Colors.black,
+      ),
+      onPressed: () {},
+    ),
+    title: Text(
+      'Search a Location',
+      style: TextStyle(color: Colors.black),
+    ),
+    centerTitle: true,
+    backgroundColor: Colors.white,
+  ),
+  navBarColor: Colors.white,
+  navBarIconColor: Colors.black,
+  moreButtons: [
+    MoreButtonModel(
+      icon: Icons.map,
+      label: 'GlobalMap',
+      onTap: () {},
+    ),
+    MoreButtonModel(
+      icon: Icons.directions_run,
+      label: 'My Paths',
+      onTap: () {},
+    ),
+    MoreButtonModel(
+      icon: Icons.contacts,
+      label: 'Contacts',
+      onTap: () {},
+    ),
+    MoreButtonModel(
+      icon: Icons.local_hospital,
+      label: 'Got Infected',
+      onTap: () {},
+    ),
+    MoreButtonModel(
+      icon: Icons.help,
+      label: 'App Help',
+      onTap: () {},
+    ),
+    MoreButtonModel(
+      icon: Icons.portrait,
+      label: 'Profile',
+      onTap: () {},
+    ),
+    null,
+    MoreButtonModel(
+      icon: Icons.settings,
+      label: 'Settings',
+      onTap: () {},
+    ),
+    null,
+  ],
+  searchWidget: Container(
+    height: 50,
+    color: Colors.redAccent,
+  ),
+  // onTap: (button) {},
+  // currentBottomBarCenterPercent: (currentBottomBarParallexPercent) {},
+  // currentBottomBarMorePercent: (currentBottomBarMorePercent) {},
+  // currentBottomBarSearchPercent: (currentBottomBarSearchPercent) {},
+  parallexCardPageTransformer: PageTransformer(
+    pageViewBuilder: (context, visibilityResolver) {
+      return PageView.builder(
+        controller: PageController(viewportFraction: 0.85),
+        itemCount: parallaxCardItemsList.length,
+        itemBuilder: (context, index) {
+          final item = parallaxCardItemsList[index];
+          final pageVisibility =
+              visibilityResolver.resolvePageVisibility(index);
+          return ParallaxCardsWidget(
+            item: item,
+            pageVisibility: pageVisibility,
+          );
+        },
+      );
+    },
+  ),
+
+
       body: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: _gmuLocation,
@@ -88,16 +177,35 @@ class MapSampleState extends State<MapSample> {
           
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: Text('My Location'),
-        icon: Icon(Icons.data_usage),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: _goToTheLake,
+      //   label: Text('My Location'),
+      //   icon: Icon(Icons.data_usage),
+      // ),
     );
   }
 
 
-       
+       final parallaxCardItemsList = <ParallaxCardItem>[
+    ParallaxCardItem(
+        title: 'Some Random Route 1',
+        body: 'Place 1',
+        background: Container(
+          color: Colors.orange,
+        )),
+    ParallaxCardItem(
+        title: 'Some Random Route 2',
+        body: 'Place 2',
+        background: Container(
+          color: Colors.redAccent,
+        )),
+    ParallaxCardItem(
+        title: 'Some Random Route 3',
+        body: 'Place 1',
+        background: Container(
+          color: Colors.blue,
+        )),
+  ];
     
   void popup()
   {
@@ -193,4 +301,20 @@ class MapSampleState extends State<MapSample> {
 
 
 
+}
+
+
+
+class NavBar extends StatefulWidget {
+  @override
+  _NavBarState createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
 }
