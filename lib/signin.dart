@@ -1,15 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:locavid/auth.dart';
 import 'package:locavid/utility/constants.dart';
 import 'package:locavid/utility/delayed_animation.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+
 class _LoginScreenState extends State<LoginScreen> {
+
   bool _rememberMe = false;
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Widget _buildEmailTF() {
     return Column(
@@ -25,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -60,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -129,9 +139,12 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () async {
-          await Navigator.pushNamed(context, '/loading');
-          Navigator.pushNamed(context, '/mainpage');
-          print('Login Button Pressed2');
+          handleSignInEmail(emailController.text, passwordController.text).then((FirebaseUser user) async {
+            await Navigator.pushNamed(context, '/loading');
+            Navigator.pushNamed(context, '/mainpage');
+            print('Login Button Pressed2');
+          }).catchError((e) => print(e));
+
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
