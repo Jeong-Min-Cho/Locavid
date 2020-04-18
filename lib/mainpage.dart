@@ -7,7 +7,6 @@ import 'package:flutter_beautiful_popup/main.dart';
 
 import 'package:location/location.dart';
 
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 
 class MapSample extends StatefulWidget {

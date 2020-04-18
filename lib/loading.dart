@@ -7,20 +7,14 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   void getWelcomePage() {
-
-
     Future.delayed(Duration(seconds: 1), () {
       Navigator.pop(context);
-
     });
-
-
   }
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     getWelcomePage();
   }
@@ -28,8 +22,7 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      body: Container(
+        body: Container(
             height: double.infinity,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -46,15 +39,10 @@ class _LoadingState extends State<Loading> {
               ),
             ),
             child: Center(
-        child: SpinKitFadingCube(
-          color: Colors.white,
-          size: 150,
-          ),
-        )
-      
-            
-      )
-      
-    );
+              child: SpinKitFadingCube(
+                color: Colors.white,
+                size: 150,
+              ),
+            )));
   }
 }

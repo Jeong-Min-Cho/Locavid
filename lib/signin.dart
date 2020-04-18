@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:locavid/mainmenu.dart';
 import 'package:flutter/services.dart';
-import 'package:locavid/constants.dart';
+import 'package:locavid/utility/constants.dart';
+import 'package:locavid/utility/delayed_animation.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -130,9 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 5.0,
         onPressed: () async {
           await Navigator.pushNamed(context, '/loading');
-          Navigator.pushNamed(context, '/mainmenu');
+          Navigator.pushNamed(context, '/mainpage');
           print('Login Button Pressed2');
-
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -273,49 +272,51 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 40.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(30),
-                        child:
-                        Image(
+              
+              DelayedAnimation(
+                              child: Container(
+                  height: double.infinity,
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.0,
+                      vertical: 40.0,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(30),
+                          child: Image(
                             image: AssetImage('assets/logos/locavid_logo.png'),
-                            ),
-                      ),
-                      // Text(
-                      //   'Sign In',
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontFamily: 'OpenSans',
-                      //     fontSize: 30.0,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      //SizedBox(height: 10.0),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
-                     // _buildSignInWithText(),
-                     // _buildSocialBtnRow(),
-                     // _buildSignupBtn(),
-                    ],
+                          ),
+                        ),
+                        // Text(
+                        //   'Sign In',
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontFamily: 'OpenSans',
+                        //     fontSize: 30.0,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        //SizedBox(height: 10.0),
+                        _buildEmailTF(),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        _buildPasswordTF(),
+                        _buildForgotPasswordBtn(),
+                        _buildRememberMeCheckbox(),
+                        _buildLoginBtn(),
+                        // _buildSignInWithText(),
+                        // _buildSocialBtnRow(),
+                        // _buildSignupBtn(),
+                      ],
+                    ),
                   ),
                 ),
+                delay: 300,
               )
             ],
           ),
