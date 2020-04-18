@@ -33,6 +33,31 @@ class MapSampleState extends State<MapSample> {
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
 
+
+  void _showAlert(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Info'),
+          content: Text("This app tracks your location,"
+              " but your data will not public until you have tested positive "
+              "for the virus. If you don't want the app to track your location"
+              " in specific locaitons, "
+              "please press the do don't track here button."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        )
+    );
+//    Navigator.pop(context);
+  }
+
+
   getsomePoints() async {
     routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
         origin: LatLng(38.833799, -77.313717),
@@ -49,23 +74,17 @@ class MapSampleState extends State<MapSample> {
         origin: LatLng(38.771544, -77.506261),
         destination: LatLng(38.836880, -77.438502),
         mode: RouteMode.driving);
-
-
-    //38.836880, -77.438502 centreville plaza
-
-    //routesCollection.add(routeCoords);
-    //routesCollection.add(routeCoords2);
-
-    // markers.add(Marker(
-    //       markerId: MarkerId('testlocation'),
-    //       position: LatLng(38.756273, -77.523046),
-    //       onTap: () {}));
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await getsomePoints();
+
+    // Call the initial alert on page build
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _showAlert(context));
+
+//    await getsomePoints();
 
     //38.771544, -77.506261 - Mannassas mall
 
@@ -99,230 +118,56 @@ class MapSampleState extends State<MapSample> {
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
+  var dontTrackButton = (
+      Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.blue,
+          onPressed: () {},
+          label: Text("Don't track here"),
+          heroTag: null,
+        ),
+      )
+  );
+
+  var testedPositiveButton = (
+      Container(
+        margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+        child: FloatingActionButton.extended(
+          heroTag: null,
+          backgroundColor: Colors.red,
+          onPressed: () {},
+          label: Text("Tested Positive")
+        ),
+      )
+  );
+
   @override
   Widget build(BuildContext context) {
-    return new ExtendedNavigationBarScaffold(
-      elevation: 0,
-      floatingAppBar: true,
-      appBar: AppBar(
-        shape: kAppbarShape,
-        leading: IconButton(
-          icon: Icon(
-            Icons.data_usage,
-            color: Colors.black,
+    return new Scaffold(
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: testedPositiveButton,
           ),
-          onPressed: () {},
-        ),
-        title: Text(
-          'Search a Location',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: dontTrackButton
+          ),
+        ],
       ),
-      navBarColor: Colors.white,
-      navBarIconColor: Colors.black,
-      moreButtons: [
-        MoreButtonModel(
-          icon: Icons.map,
-          label: 'GlobalMap',
-          onTap: () {},
-        ),
-        MoreButtonModel(
-          icon: Icons.directions_run,
-          label: 'My Paths',
-          onTap: () {},
-        ),
-        MoreButtonModel(
-          icon: Icons.contacts,
-          label: 'Contacts',
-          onTap: () {},
-        ),
-        MoreButtonModel(
-          icon: Icons.local_hospital,
-          label: 'Got Infected',
-          onTap: () {},
-        ),
-        MoreButtonModel(
-          icon: Icons.help,
-          label: 'App Help',
-          onTap: () {},
-        ),
-        MoreButtonModel(
-          icon: Icons.portrait,
-          label: 'Profile',
-          onTap: () {},
-        ),
-        null,
-        MoreButtonModel(
-          icon: Icons.settings,
-          label: 'Settings',
-          onTap: () {},
-        ),
-        null,
-      ],
-      searchWidget: Container(
-        height: 50,
-        color: Colors.redAccent,
-      ),
-      // onTap: (button) {},
-      // currentBottomBarCenterPercent: (currentBottomBarParallexPercent) {},
-      // currentBottomBarMorePercent: (currentBottomBarMorePercent) {},
-      // currentBottomBarSearchPercent: (currentBottomBarSearchPercent) {},
-      parallexCardPageTransformer: PageTransformer(
-        pageViewBuilder: (context, visibilityResolver) {
-          return PageView.builder(
-            controller: PageController(viewportFraction: 0.85),
-            itemCount: parallaxCardItemsList.length,
-            itemBuilder: (context, index) {
-              final item = parallaxCardItemsList[index];
-              final pageVisibility =
-                  visibilityResolver.resolvePageVisibility(index);
-              return ParallaxCardsWidget(
-                item: item,
-                pageVisibility: pageVisibility,
-              );
-            },
-          );
-        },
-      ),
-
       body: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: _gmuLocation,
         //myLocationEnabled: true,
-        markers: markers,
-        polylines: polyline,
-        onMapCreated: (GoogleMapController controller) {
-          setState(() {
-            //  _controller2 = controller;
-            _controller.complete(controller);
-
-            polyline.add(Polyline(
-                polylineId: PolylineId('route1'),
-                visible: true,
-                points: routeCoords,
-                width: 4,
-                color: Colors.blue,
-                startCap: Cap.roundCap,
-                endCap: Cap.buttCap));
-
-            polyline.add(Polyline(
-                polylineId: PolylineId('route2'),
-                visible: true,
-                points: routeCoords2,
-                width: 4,
-                color: Colors.red,
-                startCap: Cap.roundCap,
-                endCap: Cap.buttCap));
-          });
-        },
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: Text('My Location'),
-      //   icon: Icon(Icons.data_usage),
-      // ),
+        markers: markers
+      )
     );
-  }
 
-  final parallaxCardItemsList = <ParallaxCardItem>[
-    ParallaxCardItem(
-        title: 'Some Random Route 1',
-        body: 'Place 1',
-        background: Container(
-          color: Colors.orange,
-        )),
-    ParallaxCardItem(
-        title: 'Some Random Route 2',
-        body: 'Place 2',
-        background: Container(
-          color: Colors.redAccent,
-        )),
-    ParallaxCardItem(
-        title: 'Some Random Route 3',
-        body: 'Place 1',
-        background: Container(
-          color: Colors.blue,
-        )),
-  ];
-
-  void popup() {
-    setState(() {
-      final popup = BeautifulPopup(
-        context: context,
-        template: TemplateFail,
-      );
-      popup.show(
-        title: 'Information',
-        content: 'YAYYYYYYYYYYYYYYYYY3Y7',
-        actions: [
-          popup.button(
-              label: 'Do Not Track Here',
-              onPressed: () {
-                markers.clear();
-              }),
-          popup.button(
-            label: 'Close',
-            onPressed: Navigator.of(context).pop,
-          ),
-        ],
-      );
-    });
   }
 
   void removeMarker() {
     //markers.removeAll(Marker());
-  }
-
-  Future<void> _goToTheLake() async {
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-
-    setState(() {
-      markers.add(Marker(
-          markerId: MarkerId('mylocation'),
-          position: LatLng(_locationData.latitude, _locationData.longitude),
-          onTap: () => popup()));
-    });
-
-    final GoogleMapController controller = await _controller.future;
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(_locationData.latitude, _locationData.longitude),
-        zoom: 19.151926040649414)));
-  }
-}
-
-class NavBar extends StatefulWidget {
-  @override
-  _NavBarState createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
