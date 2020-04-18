@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:locavid/delayed_animation.dart';
 import 'package:locavid/signin.dart';
+import 'package:locavid/mainmenu.dart';
 
 
 void main() {
@@ -11,6 +12,7 @@ void main() {
     routes: {
       '/': (context) => MyApp(),
       '/signin': (context) => LoginScreen(),
+      '/mainmenu': (context) => MapSample(),
     },
   ));
 }
@@ -85,6 +87,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                           radius: 50.0,
                         )),
                   ),
+                 //long Image(image: AssetImage('assets/logos/locavid_logo.png')),
                   DelayedAnimation(
                     child: Text(
                       "Locavid",
