@@ -45,11 +45,10 @@ class MapSampleState extends State<MapSample> {
         mode: RouteMode.driving);
     //38.771544, -77.506261 - Mannassas mall
 
-    routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: LatLng(38.771544, -77.506261),
-        destination: LatLng(38.836880, -77.438502),
-        mode: RouteMode.driving);
-
+    // routeCoords3 = await googleMapPolyline.getCoordinatesWithLocation(
+    //     origin: LatLng(38.771544, -77.506261),
+    //     destination: LatLng(38.836880, -77.438502),
+    //     mode: RouteMode.driving);
 
     //38.836880, -77.438502 centreville plaza
 
@@ -63,25 +62,34 @@ class MapSampleState extends State<MapSample> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await getsomePoints();
+    getsomePoints();
+
+    // Marker resultMarker0 = Marker(
+    //   markerId: MarkerId('testt1'),
+    //   infoWindow: InfoWindow(
+    //       title: "GMU Manassas Campus", snippet: "Stayed: 4 hour(s)"),
+    //   position: LatLng(38.756273, -77.523046),
+    // );
+
+    // markers.add(resultMarker0);
 
     //38.771544, -77.506261 - Mannassas mall
 
-    Marker resultMarker = Marker(
-      markerId: MarkerId('testt'),
-      infoWindow: InfoWindow(
-          title: "GMU Manassas Campus", snippet: "Stayed: 3 hour(s)"),
-      position: LatLng(38.836880, -77.438502),
-    );
+    // Marker resultMarker = Marker(
+    //   markerId: MarkerId('testt2'),
+    //   infoWindow: InfoWindow(
+    //       title: "Centreville Plaza", snippet: "Stayed: 2 hour(s)"),
+    //   position: LatLng(38.836880, -77.438502),
+    // );
 
-    markers.add(resultMarker);
+    // markers.add(resultMarker);
 
     Marker resultMarker2 = Marker(
-      markerId: MarkerId('testt'),
-      infoWindow: InfoWindow(
-          title: "Mannassas mall", snippet: "Stayed: 2 hour(s)"),
+      markerId: MarkerId('testt3'),
+      infoWindow:
+          InfoWindow(title: "Mannassas mall", snippet: "Stayed: 2 hour(s)"),
       position: LatLng(38.771544, -77.506261),
     );
 
