@@ -70,10 +70,26 @@ class MapSampleState extends State<MapSample> {
         mode: RouteMode.driving);
     //38.771544, -77.506261 - Mannassas mall
 
-    routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
+
+   // routeCoords3.addAll([LatLng(38.833799, -77.313717), LatLng(38.756273, -77.523046)]);
+    //routeCoords3.ad
+   // routeCoords3.add(LatLng(38.756273, -77.523046));
+
+
+    routeCoords3 = await googleMapPolyline.getCoordinatesWithLocation(
         origin: LatLng(38.771544, -77.506261),
         destination: LatLng(38.836880, -77.438502),
         mode: RouteMode.driving);
+
+    //38.836880, -77.438502 centreville plaza
+
+    //routesCollection.add(routeCoords);
+    //routesCollection.add(routeCoords2);
+
+    // markers.add(Marker(
+    //       markerId: MarkerId('testlocation'),
+    //       position: LatLng(38.756273, -77.523046),
+    //       onTap: () {}));
   }
 
   @override
@@ -84,27 +100,40 @@ class MapSampleState extends State<MapSample> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _showAlert(context));
 
-//    await getsomePoints();
+    getsomePoints();
 
-    //38.771544, -77.506261 - Mannassas mall
 
     Marker resultMarker = Marker(
-      markerId: MarkerId('testt'),
+      markerId: MarkerId('testt2'),
       infoWindow: InfoWindow(
-          title: "GMU Manassas Campus", snippet: "Stayed: 3 hour(s)"),
+          title: "Centreville Plaza", snippet: "Stayed: 2 hour(s)"),
       position: LatLng(38.836880, -77.438502),
     );
 
     markers.add(resultMarker);
 
     Marker resultMarker2 = Marker(
-      markerId: MarkerId('testt'),
-      infoWindow: InfoWindow(
-          title: "Mannassas mall", snippet: "Stayed: 2 hour(s)"),
+      markerId: MarkerId('testt3'),
+      infoWindow:
+          InfoWindow(title: "Mannassas mall", snippet: "Stayed: 2 hour(s)"),
       position: LatLng(38.771544, -77.506261),
     );
 
     markers.add(resultMarker2);
+
+
+
+    // Marker resultMarker0 = Marker(
+    //   markerId: MarkerId('testt1'),
+    //   infoWindow: InfoWindow(
+    //       title: "GMU Manassas Campus", snippet: "Stayed: 4 hour(s)"),
+    //   position: LatLng(38.756273, -77.523046),
+    // );
+
+    // markers.add(resultMarker0);
+
+    //38.771544, -77.506261 - Mannassas mall
+
   }
 
   static final CameraPosition _gmuLocation = CameraPosition(
@@ -161,13 +190,139 @@ class MapSampleState extends State<MapSample> {
         mapType: MapType.normal,
         initialCameraPosition: _gmuLocation,
         //myLocationEnabled: true,
-        markers: markers
+        markers: markers,
+        polylines: polyline,
+        onMapCreated: (GoogleMapController controller) {
+          setState(() {
+            //  _controller2 = controller;
+            _controller.complete(controller);
+
+
+            // polyline.add(Polyline(
+            //     polylineId: PolylineId('route1'),
+            //     visible: true,
+            //     points: routeCoords,
+            //     width: 4,
+            //     color: Colors.blue,
+            //     startCap: Cap.roundCap,
+            //     endCap: Cap.buttCap));
+
+
+          });
+        },
       )
     );
+  }
 
+  final parallaxCardItemsList = <ParallaxCardItem>[
+    ParallaxCardItem(
+        title: 'Some Random Route 1',
+        body: 'Place 1',
+        background: Container(
+          color: Colors.orange,
+        )),
+    ParallaxCardItem(
+        title: 'Some Random Route 2',
+        body: 'Place 2',
+        background: Container(
+          color: Colors.redAccent,
+        )),
+    ParallaxCardItem(
+        title: 'Some Random Route 3',
+        body: 'Place 1',
+        background: Container(
+          color: Colors.blue,
+        )),
+  ];
+
+  void popup() {
+    setState(() {
+      final popup = BeautifulPopup(
+        context: context,
+        template: TemplateFail,
+      );
+      popup.show(
+        title: 'Information',
+        content: 'YAYYYYYYYYYYYYYYYYY3Y7',
+        actions: [
+          popup.button(
+              label: 'Do Not Track Here',
+              onPressed: () {
+                markers.clear();
+              }),
+          popup.button(
+            label: 'Close',
+            onPressed: Navigator.of(context).pop,
+          ),
+        ],
+      );
+    });
   }
 
   void removeMarker() {
     //markers.removeAll(Marker());
+  }
+
+  Future<void> _goToTheLake() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+
+    setState(() {
+      markers.add(Marker(
+          markerId: MarkerId('mylocation'),
+          position: LatLng(_locationData.latitude, _locationData.longitude),
+          onTap: () => popup()));
+
+
+
+
+            polyline.add(Polyline(
+                        polylineId: PolylineId('route3'),
+                        visible: true,
+                        points: routeCoords3,
+                        width: 4,
+                        color: Colors.red,
+                        startCap: Cap.roundCap,
+                        endCap: Cap.buttCap));
+    });
+
+    // final GoogleMapController controller = await _controller.future;
+
+    // controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+    //     target: LatLng(_locationData.latitude, _locationData.longitude),
+    //     zoom: 19.151926040649414)));
+  }
+}
+
+class NavBar extends StatefulWidget {
+  @override
+  _NavBarState createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
