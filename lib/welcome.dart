@@ -4,6 +4,7 @@ import 'package:locavid/utility/delayed_animation.dart';
 import 'package:locavid/signin.dart';
 import 'package:locavid/mainpage.dart';
 import 'package:locavid/loading.dart';
+import 'package:locavid/worldmap.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -14,6 +15,7 @@ void main() {
       '/signin': (context) => LoginScreen(),
       '/mainpage': (context) => MapSample(),
       '/loading': (context) => Loading(),
+      '/worldmap': (context) => WorldMap(),
     },
   ));
 }

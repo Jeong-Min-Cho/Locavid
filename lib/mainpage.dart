@@ -154,13 +154,13 @@ class MapSampleState extends State<MapSample> {
         label: Text("Tested Positive")),
   ));
 
-  var globalMapButton = (Container(
-    child: FloatingActionButton.extended(
-        icon: Icon(Icons.map),
-        backgroundColor: Colors.green,
-        onPressed: () {},
-        label: Text("Global Map")),
-  ));
+  // var globalMapButton = (Container(
+  //   child: FloatingActionButton.extended(
+  //       icon: Icon(Icons.map),
+  //       backgroundColor: Colors.green,
+  //       onPressed: () => Navigator.pushNamed(context, '/signin'),
+  //       label: Text("Global Map")),
+  // ));
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +169,14 @@ class MapSampleState extends State<MapSample> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(30, 50, 0, 0),
-            child: Align(alignment: Alignment.topRight, child: globalMapButton),
+            child: Align(
+                alignment: Alignment.topRight,
+                child:  FloatingActionButton.extended(
+                      icon: Icon(Icons.map),
+                      backgroundColor: Colors.green,
+                      onPressed: () => Navigator.pushNamed(context, '/worldmap'),
+                      label: Text("Global Map")),
+                ),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
@@ -179,12 +186,9 @@ class MapSampleState extends State<MapSample> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-            child: 
-            Align(
-              alignment: Alignment.bottomRight, 
-              child: dontTrackButton)
-              ),
+              padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
+              child: Align(
+                  alignment: Alignment.bottomRight, child: dontTrackButton)),
         ],
       ),
       body: GoogleMap(
