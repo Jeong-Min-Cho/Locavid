@@ -11,7 +11,6 @@ import 'package:google_map_polyline/google_map_polyline.dart';
 
 import 'package:extended_navbar_scaffold/extended_navbar_scaffold.dart';
 
-import 'package:Flutter-FFNavigationBar/ff_navigation_bar.dart';
 
 class MapSample extends StatefulWidget {
   @override
