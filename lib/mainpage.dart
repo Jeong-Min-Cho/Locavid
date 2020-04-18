@@ -11,46 +11,34 @@ import 'package:google_map_polyline/google_map_polyline.dart';
 
 import 'package:extended_navbar_scaffold/extended_navbar_scaffold.dart';
 
-
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
 }
 
-
-
-
-
-
 class MapSampleState extends State<MapSample> {
-
   Set<Marker> markers = Set();
   // this will hold the generated polylines
   final Set<Polyline> polyline = {};
 
-
   Completer<GoogleMapController> _controller = Completer();
+
   //GoogleMapController _controller2;
   List<LatLng> routeCoords;
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
 
-  
-    getsomePoints() async {
-
-      routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
-          origin: LatLng(38.833799, -77.313717),
-          destination: LatLng(38.756273, -77.523046),
-          mode: RouteMode.driving);
-
+  getsomePoints() async {
+    routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: LatLng(38.833799, -77.313717),
+        destination: LatLng(38.756273, -77.523046),
+        mode: RouteMode.driving);
   }
 
-
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     getsomePoints();
-    
   }
 
   static final CameraPosition _gmuLocation = CameraPosition(
@@ -67,91 +55,90 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return new ExtendedNavigationBarScaffold(
-        elevation: 0,
-  floatingAppBar: true,
-  appBar: AppBar(
-    shape: kAppbarShape,
-    leading: IconButton(
-      icon: Icon(
-        Icons.data_usage,
-        color: Colors.black,
+      elevation: 0,
+      floatingAppBar: true,
+      appBar: AppBar(
+        shape: kAppbarShape,
+        leading: IconButton(
+          icon: Icon(
+            Icons.data_usage,
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+        title: Text(
+          'Search a Location',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
       ),
-      onPressed: () {},
-    ),
-    title: Text(
-      'Search a Location',
-      style: TextStyle(color: Colors.black),
-    ),
-    centerTitle: true,
-    backgroundColor: Colors.white,
-  ),
-  navBarColor: Colors.white,
-  navBarIconColor: Colors.black,
-  moreButtons: [
-    MoreButtonModel(
-      icon: Icons.map,
-      label: 'GlobalMap',
-      onTap: () {},
-    ),
-    MoreButtonModel(
-      icon: Icons.directions_run,
-      label: 'My Paths',
-      onTap: () {},
-    ),
-    MoreButtonModel(
-      icon: Icons.contacts,
-      label: 'Contacts',
-      onTap: () {},
-    ),
-    MoreButtonModel(
-      icon: Icons.local_hospital,
-      label: 'Got Infected',
-      onTap: () {},
-    ),
-    MoreButtonModel(
-      icon: Icons.help,
-      label: 'App Help',
-      onTap: () {},
-    ),
-    MoreButtonModel(
-      icon: Icons.portrait,
-      label: 'Profile',
-      onTap: () {},
-    ),
-    null,
-    MoreButtonModel(
-      icon: Icons.settings,
-      label: 'Settings',
-      onTap: () {},
-    ),
-    null,
-  ],
-  searchWidget: Container(
-    height: 50,
-    color: Colors.redAccent,
-  ),
-  // onTap: (button) {},
-  // currentBottomBarCenterPercent: (currentBottomBarParallexPercent) {},
-  // currentBottomBarMorePercent: (currentBottomBarMorePercent) {},
-  // currentBottomBarSearchPercent: (currentBottomBarSearchPercent) {},
-  parallexCardPageTransformer: PageTransformer(
-    pageViewBuilder: (context, visibilityResolver) {
-      return PageView.builder(
-        controller: PageController(viewportFraction: 0.85),
-        itemCount: parallaxCardItemsList.length,
-        itemBuilder: (context, index) {
-          final item = parallaxCardItemsList[index];
-          final pageVisibility =
-              visibilityResolver.resolvePageVisibility(index);
-          return ParallaxCardsWidget(
-            item: item,
-            pageVisibility: pageVisibility,
+      navBarColor: Colors.white,
+      navBarIconColor: Colors.black,
+      moreButtons: [
+        MoreButtonModel(
+          icon: Icons.map,
+          label: 'GlobalMap',
+          onTap: () {},
+        ),
+        MoreButtonModel(
+          icon: Icons.directions_run,
+          label: 'My Paths',
+          onTap: () {},
+        ),
+        MoreButtonModel(
+          icon: Icons.contacts,
+          label: 'Contacts',
+          onTap: () {},
+        ),
+        MoreButtonModel(
+          icon: Icons.local_hospital,
+          label: 'Got Infected',
+          onTap: () {},
+        ),
+        MoreButtonModel(
+          icon: Icons.help,
+          label: 'App Help',
+          onTap: () {},
+        ),
+        MoreButtonModel(
+          icon: Icons.portrait,
+          label: 'Profile',
+          onTap: () {},
+        ),
+        null,
+        MoreButtonModel(
+          icon: Icons.settings,
+          label: 'Settings',
+          onTap: () {},
+        ),
+        null,
+      ],
+      searchWidget: Container(
+        height: 50,
+        color: Colors.redAccent,
+      ),
+      // onTap: (button) {},
+      // currentBottomBarCenterPercent: (currentBottomBarParallexPercent) {},
+      // currentBottomBarMorePercent: (currentBottomBarMorePercent) {},
+      // currentBottomBarSearchPercent: (currentBottomBarSearchPercent) {},
+      parallexCardPageTransformer: PageTransformer(
+        pageViewBuilder: (context, visibilityResolver) {
+          return PageView.builder(
+            controller: PageController(viewportFraction: 0.85),
+            itemCount: parallaxCardItemsList.length,
+            itemBuilder: (context, index) {
+              final item = parallaxCardItemsList[index];
+              final pageVisibility =
+                  visibilityResolver.resolvePageVisibility(index);
+              return ParallaxCardsWidget(
+                item: item,
+                pageVisibility: pageVisibility,
+              );
+            },
           );
         },
-      );
-    },
-  ),
-
+      ),
 
       body: GoogleMap(
         mapType: MapType.normal,
@@ -161,20 +148,18 @@ class MapSampleState extends State<MapSample> {
         polylines: polyline,
         onMapCreated: (GoogleMapController controller) {
           setState(() {
-          //  _controller2 = controller;
+            //  _controller2 = controller;
             _controller.complete(controller);
-        
 
             polyline.add(Polyline(
-          polylineId: PolylineId('route1'),
-          visible: true,
-          points: routeCoords,
-          width: 4,
-          color: Colors.blue,
-          startCap: Cap.roundCap,
-          endCap: Cap.buttCap));
+                polylineId: PolylineId('route1'),
+                visible: true,
+                points: routeCoords,
+                width: 4,
+                color: Colors.blue,
+                startCap: Cap.roundCap,
+                endCap: Cap.buttCap));
           });
-          
         },
       ),
       // floatingActionButton: FloatingActionButton.extended(
@@ -185,8 +170,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-
-       final parallaxCardItemsList = <ParallaxCardItem>[
+  final parallaxCardItemsList = <ParallaxCardItem>[
     ParallaxCardItem(
         title: 'Some Random Route 1',
         body: 'Place 1',
@@ -206,49 +190,36 @@ class MapSampleState extends State<MapSample> {
           color: Colors.blue,
         )),
   ];
-    
-  void popup()
-  {
+
+  void popup() {
     setState(() {
       final popup = BeautifulPopup(
-              context: context,
-              template: TemplateFail,
-            );
-            popup.show(
-              title: 'Information',
-              content: 'YAYYYYYYYYYYYYYYYYY3Y7',
-              actions: [
-                  popup.button(
-                  label: 'Do Not Track Here',
-                  onPressed: ()   {
-                     markers.clear();
-
-                  }
-                ),
-
-                popup.button(
-                  label: 'Close',
-                  onPressed: Navigator.of(context).pop,
-                ),
-              ],
-            );
+        context: context,
+        template: TemplateFail,
+      );
+      popup.show(
+        title: 'Information',
+        content: 'YAYYYYYYYYYYYYYYYYY3Y7',
+        actions: [
+          popup.button(
+              label: 'Do Not Track Here',
+              onPressed: () {
+                markers.clear();
+              }),
+          popup.button(
+            label: 'Close',
+            onPressed: Navigator.of(context).pop,
+          ),
+        ],
+      );
     });
-                
-    
   }
 
-  void removeMarker()
-  {
+  void removeMarker() {
     //markers.removeAll(Marker());
   }
 
-
   Future<void> _goToTheLake() async {
-
- 
-    
-
-
     Location location = new Location();
 
     bool _serviceEnabled;
@@ -273,37 +244,20 @@ class MapSampleState extends State<MapSample> {
 
     _locationData = await location.getLocation();
 
-
     setState(() {
       markers.add(Marker(
           markerId: MarkerId('mylocation'),
           position: LatLng(_locationData.latitude, _locationData.longitude),
-          onTap: () => popup()
-
-          )
-          
-          );
-
+          onTap: () => popup()));
     });
-    
+
     final GoogleMapController controller = await _controller.future;
-    
 
-    
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(_locationData.latitude, _locationData.longitude),
-        zoom: 19.151926040649414
-      )));
-
+        zoom: 19.151926040649414)));
   }
-
-
-
 }
-
-
 
 class NavBar extends StatefulWidget {
   @override
@@ -313,8 +267,6 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Container();
   }
 }
