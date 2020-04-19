@@ -25,7 +25,7 @@ class WorldMapState extends State<WorldMap> {
   //38.897438, -77.036587 White House
   static final CameraPosition _whiteHouse = CameraPosition(
     target: LatLng(38.897438, -77.036587),
-    zoom: 12.5,
+    zoom: 13.5,
   );
 
   getsomePoints(LatLng origin, LatLng des, int polyid) async {
@@ -52,7 +52,7 @@ class WorldMapState extends State<WorldMap> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _centerOnUser();
+     // _centerOnUser();
     });
     var whiteHouse = LatLng(38.897438, -77.036587);
 

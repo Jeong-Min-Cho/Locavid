@@ -40,6 +40,8 @@ class MapSampleState extends State<MapSample> {
 
   bool isPositive = false;
 
+  static bool isAlerted = false;
+
   var currentColor = Colors.blue[300];
 
   Completer<GoogleMapController> _controller = Completer();
@@ -106,32 +108,34 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     super.initState();
-    
+
     // Call the initial alert on page build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showAlert(context);
       _centerOnUser();
 
-      Alert(
-      context: context,
-      type: AlertType.error,
-      title: "ALERT",
-      desc:
-          "Your Friend [John]\nhas been confirmed as COVID19\nPlease, check his paths ",
-      buttons: [
-        DialogButton(
-          child: Text(
-            "Got It",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.pop(context),
-          width: 120,
-        )
-      ],
-    ).show();
-
+      if (!isAlerted) {
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "ALERT",
+          desc:
+              "Your Friend [John]\nhas been confirmed as COVID19\nPlease, check his paths ",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Got It",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+        isAlerted = true;
+      }
     });
-    
+
     getsomePoints();
 
     Marker resultMarker0 = Marker(
@@ -174,7 +178,7 @@ class MapSampleState extends State<MapSample> {
   Widget testedPositiveButton(context) {
     return (Container(
       child: FloatingActionButton.extended(
-          heroTag: null,
+          heroTag: 'positive',
           backgroundColor: isPositive ? Colors.grey : Colors.red,
           onPressed: isPositive
               ? null
@@ -194,8 +198,30 @@ class MapSampleState extends State<MapSample> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),
                               ),
-                              onPressed: () =>
-                                  {Navigator.pop(context), isPositive = true},
+                              onPressed: () => {
+                                    Navigator.pop(context),
+                                    isPositive = true,
+                                    Alert(
+                                      context: context,
+                                      type: AlertType.info,
+                                      title: "ALERT",
+                                      desc:
+                                          "Your Past Locations are shared\nThanks for your contribution",
+                                      buttons: [
+                                        DialogButton(
+                                          child: Text(
+                                            "Yes",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          width: 120,
+                                        )
+                                      ],
+                                    ).show()
+                                  },
                               color: Colors.redAccent[100]),
                           DialogButton(
                               child: Text(
@@ -228,6 +254,16 @@ class MapSampleState extends State<MapSample> {
 
   void changeColor() {
     //lines.forEach((element) => lines.add(Poly)
+  }
+
+  Future<void> setCameraToMe() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    final GoogleMapController controller = await _controller.future;
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude, position.longitude), zoom: 13)));
   }
 
   @override
@@ -265,6 +301,24 @@ class MapSampleState extends State<MapSample> {
                       heroTag: null,
                     ),
                   )))),
+          GestureDetector(
+            onTap: () {
+              setCameraToMe();
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(30, 40, 0, 0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: (Container(
+                    child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/logos/profilepic.jpg'),
+                  radius: 30,
+
+                  //setCameraToMe()
+                ))),
+              ),
+            ),
+          ),
         ],
       ),
       body: GoogleMap(
@@ -336,11 +390,8 @@ class MapSampleState extends State<MapSample> {
     // controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
     //     target: LatLng(position.latitude, position.longitude), zoom: 17)));
 
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(38.756273, -77.523046), zoom: 13)));
-
-
-
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(38.756273, -77.523046), zoom: 13)));
 
     lastPos = LatLng(position.latitude, position.longitude);
 
