@@ -10,6 +10,7 @@ import 'package:locavid/worldmap.dart';
 void main() {
   runApp(MaterialApp(
     title: 'Routes test',
+    debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {
       '/': (context) => MyApp(),
@@ -52,93 +53,100 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          //backgroundColor: Colors.blueAccent[200],
+        //backgroundColor: Colors.blueAccent[200],
           body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF73AEF5),
-              Color(0xFF61A4F1),
-              Color(0xFF478DE0),
-              Color(0xFF398AE5),
-            ],
-            stops: [0.1, 0.4, 0.7, 0.9],
-          ),
-        ),
-        child: Center(
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 10),
-                Image(
-                    image: AssetImage('assets/logos/locavid_logo.png'),
-                    height: 150,
-                    fit:BoxFit.fill
-                ),
-                SizedBox(height: 10,),
-                DelayedAnimation(
-                  child: Text(
-                    "We can overcome COVID-19 together",
-                    style: TextStyle(fontSize: 20.0, color: color),
-                  ),
-                  delay: delayedAmount + 300,
-                ),
-                SizedBox(height: 150),
-                DelayedAnimation(
-                  child: GestureDetector(
-                    onTapDown: _onTapDown,
-                    onTapUp: _onTapUp,
-                    child: Transform.scale(
-                      scale: _scale,
-                      child: Container(
-                          height: 60,
-                          width: 270,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100.0),
-                            color: Colors.white,
-                          ),
-                          child: MaterialButton(
-                            child: Text(
-                              'Sign-in Locavid',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            onPressed: () async {
-                              await Navigator.pushNamed(context, '/loading');
-                              Navigator.pushNamed(context, '/signin');
-                            },
-                          )),
-                    ),
-                  ),
-                  delay: delayedAmount + 400 ,
-                ),
-                SizedBox(
-                  height: 50.0,
-                ),
-                DelayedAnimation(
-                  child: Text(
-                    "Sign-up",
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: color),
-                  ),
-                  delay: delayedAmount + 500,
-                ),
-              ],
+
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF61A4F1),
+                  Color(0xFF478DE0),
+                  Color(0xFF398AE5),
+                  Color(0xFF398AE5),
+                ],
+                stops: [0.1, 0.4, 0.7, 0.9],
+              ),
             ),
-          ),
-        ),
-      )),
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 100),
+                    DelayedAnimation(
+                      child: Text(
+                        "Welcome to Locavid",
+                        style: TextStyle(fontSize: 25.0, color: color, fontWeight: FontWeight.bold, fontFamily: "Nunito",
+                            shadows: [
+                              Shadow(
+                                color: Colors.black26,
+                                blurRadius: 10.0,
+                              )
+                            ]),
+                      ),
+                      delay: delayedAmount + 300,
+                    ),
+                    SizedBox(height: 20),
+                    Image(
+                        image: AssetImage('assets/logos/small_logo.png'),
+                        height: 150,
+                        fit:BoxFit.fill
+                    ),
+                    SizedBox(height: 150),
+                    DelayedAnimation(
+                      child: GestureDetector(
+                        onTapDown: _onTapDown,
+                        onTapUp: _onTapUp,
+                        child: Transform.scale(
+                          scale: _scale,
+                          child: Container(
+                              height: 60,
+                              width: 270,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.white,
+                              ),
+                              child: MaterialButton(
+                                child: Text(
+                                  'Sign-in',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await Navigator.pushNamed(context, '/loading');
+                                  Navigator.pushNamed(context, '/signin');
+                                },
+                              )),
+                        ),
+                      ),
+                      delay: delayedAmount + 400 ,
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "Sign-up",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: color),
+                      ),
+                      delay: delayedAmount + 500,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )),
     );
   }
 
