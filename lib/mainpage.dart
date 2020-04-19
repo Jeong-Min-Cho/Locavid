@@ -337,7 +337,7 @@ class MapSampleState extends State<MapSample> {
     //     target: LatLng(position.latitude, position.longitude), zoom: 17)));
 
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(38.756273, -77.523046), zoom: 14)));
+        target: LatLng(38.756273, -77.523046), zoom: 13)));
 
 
 
