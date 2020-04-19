@@ -139,11 +139,18 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () async {
-          handleSignInEmail(emailController.text, passwordController.text).then((FirebaseUser user) async {
+
+          if(_rememberMe){
+            Navigator.pushNamed(context, '/mainpage');
+          }
+          else
+          {
+            handleSignInEmail(emailController.text, passwordController.text).then((FirebaseUser user) async {
             await Navigator.pushNamed(context, '/loading');
             Navigator.pushNamed(context, '/mainpage');
             print('Login Button Pressed2');
           }).catchError((e) => print(e));
+          }
 
         },
         padding: EdgeInsets.all(15.0),
