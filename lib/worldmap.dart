@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math';
 
@@ -50,7 +51,12 @@ class WorldMapState extends State<WorldMap> {
   void initState() {
     super.initState();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _centerOnUser();
+    });
     var whiteHouse = LatLng(38.897438, -77.036587);
+
+
 
     markers.add(Marker(
         markerId: MarkerId('mylocation'),
@@ -105,8 +111,16 @@ class WorldMapState extends State<WorldMap> {
     );
   }
 
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   //controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
+
+  Future<void> _centerOnUser() async {
+
+    final GoogleMapController controller = await _controller.future;
+
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 13)));
+  }
+
 }

@@ -145,11 +145,12 @@ class _LoginScreenState extends State<LoginScreen> {
           }
           else
           {
-            handleSignInEmail(emailController.text, passwordController.text).then((FirebaseUser user) async {
+            handleSignInEmail(emailController.text, passwordController.text)
+                .then((FirebaseUser user) async {
             await Navigator.pushNamed(context, '/loading');
             Navigator.pushNamed(context, '/mainpage');
-            print('Login Button Pressed2');
-          }).catchError((e) => print(e));
+          }).catchError(
+                    (e) => print(e));
           }
 
         },
