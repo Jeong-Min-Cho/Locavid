@@ -99,19 +99,49 @@ class MapSampleState extends State<MapSample> {
         origin: LatLng(38.771544, -77.506261),
         destination: LatLng(38.836880, -77.438502),
         mode: RouteMode.driving);
+
+    // renderPathsOrigin(LatLng(38.836880, -77.438502), LatLng(38.771544, -77.506261), 1 );
   }
 
   @override
   void initState() {
     super.initState();
-
+    
     // Call the initial alert on page build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showAlert(context);
       _centerOnUser();
-    });
 
+      Alert(
+      context: context,
+      type: AlertType.error,
+      title: "ALERT",
+      desc:
+          "Your Friend [John]\nhas been confirmed as COVID19\nPlease, check his paths ",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Got It",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+
+    });
+    
     getsomePoints();
+
+    Marker resultMarker0 = Marker(
+      markerId: MarkerId('testt1'),
+      infoWindow: InfoWindow(
+          title: "GMU Manassas Campus", snippet: "Stayed: 3.4 hour(s)"),
+      position: LatLng(38.756273, -77.523046),
+    );
+
+    markers.add(resultMarker0);
 
     Marker resultMarker = Marker(
       markerId: MarkerId('testt2'),
@@ -130,6 +160,8 @@ class MapSampleState extends State<MapSample> {
     );
 
     markers.add(resultMarker2);
+
+    //renderPathsOrigin(LatLng(38.836880, -77.438502), LatLng(38.771544, -77.506261), 1 );
 
     // _trackUserLocation();
   }
@@ -224,8 +256,9 @@ class MapSampleState extends State<MapSample> {
                       backgroundColor: Colors.blue,
                       onPressed: () => {
                         setState(() {
-                         // markers.removeWhere((item) => item.markerId.value == g_markerID.value);
-                         markers.removeWhere((item) => item.markerId.value == g_markerID);
+                          // markers.removeWhere((item) => item.markerId.value == g_markerID.value);
+                          markers.removeWhere(
+                              (item) => item.markerId.value == g_markerID);
                         })
                       },
                       label: Text("Don't track here"),
@@ -253,6 +286,20 @@ class MapSampleState extends State<MapSample> {
     //markers.removeAll(Marker());
   }
 
+  renderPathsOrigin(LatLng origin, LatLng des, int id) async {
+    var temp = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: origin, destination: des, mode: RouteMode.walking);
+
+    lines.add(Polyline(
+        polylineId: PolylineId('hardcode'),
+        visible: true,
+        points: temp,
+        width: 3,
+        color: Colors.redAccent[300],
+        startCap: Cap.roundCap,
+        endCap: Cap.buttCap));
+  }
+
   renderPaths(LatLng des) async {
     var temp = await googleMapPolyline.getCoordinatesWithLocation(
         origin: lastPos, destination: des, mode: RouteMode.walking);
@@ -263,10 +310,7 @@ class MapSampleState extends State<MapSample> {
           markerId: MarkerId(tempID),
           infoWindow: InfoWindow(title: "New Location " + polid.toString()),
           position: des,
-          onTap: () => {
-                g_markerID = tempID,
-                print('sup' + tempID)
-              }));
+          onTap: () => {g_markerID = tempID, print('sup' + tempID)}));
 
       lines.add(Polyline(
           polylineId: PolylineId('testr' + polid.toString()),
@@ -289,8 +333,14 @@ class MapSampleState extends State<MapSample> {
 
     final GoogleMapController controller = await _controller.future;
 
+    // controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+    //     target: LatLng(position.latitude, position.longitude), zoom: 17)));
+
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude, position.longitude), zoom: 17)));
+        target: LatLng(38.756273, -77.523046), zoom: 14)));
+
+
+
 
     lastPos = LatLng(position.latitude, position.longitude);
 
@@ -305,7 +355,25 @@ class MapSampleState extends State<MapSample> {
       markers.add(marker);
     });
 
-    polyline.add(Polyline(
+    // lines.add(Polyline(
+    //     polylineId: PolylineId('route1'),
+    //     visible: true,
+    //     points: routeCoords1,
+    //     width: 4,
+    //     color: Colors.red,
+    //     startCap: Cap.roundCap,
+    //     endCap: Cap.buttCap));
+
+    lines.add(Polyline(
+        polylineId: PolylineId('route2'),
+        visible: true,
+        points: routeCoords2,
+        width: 4,
+        color: Colors.red[300],
+        startCap: Cap.roundCap,
+        endCap: Cap.buttCap));
+
+    lines.add(Polyline(
         polylineId: PolylineId('route3'),
         visible: true,
         points: routeCoords3,
