@@ -1,3 +1,4 @@
+import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MapSampleState extends State<MapSample> {
   int polid = 0;
   int markid = 0;
 
-  MarkerId g_markerID = MarkerId('none');
+  String g_markerID = 'none';
 
   bool isPositive = false;
 
@@ -138,57 +139,48 @@ class MapSampleState extends State<MapSample> {
     zoom: 10,
   );
 
-  var dontTrackButton = (Container(
-    child: FloatingActionButton.extended(
-      backgroundColor: Colors.blue,
-      onPressed: () {},
-      label: Text("Don't track here"),
-      heroTag: null,
-    ),
-  ));
-
   Widget testedPositiveButton(context) {
     return (Container(
       child: FloatingActionButton.extended(
           heroTag: null,
           backgroundColor: isPositive ? Colors.grey : Colors.red,
-          onPressed: isPositive ? null : () {
-            setState(() {
-              if(!isPositive){
-              Alert(
-              context: context,
-              type: AlertType.warning,
-              title: "WARNING",
-              desc: "Your Past Locations Will Be Shared. \nAre you sure?",
-              buttons: [
-                DialogButton(
-                    child: Text(
-                      "Yes",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () => {
-                          
-                          Navigator.pop(context),
-                          isPositive = true
-                          
-
-                          
-                        },
-                    color: Colors.redAccent[100]),
-                DialogButton(
-                    child: Text(
-                      "No",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    color: Colors.grey[100])
-              ],
-            ).show();
-              }
-            });
-            
-          },
-          label: Text("Tested Positive", style: TextStyle(color: isPositive ? Colors.grey[300] : Colors.white))),
+          onPressed: isPositive
+              ? null
+              : () {
+                  setState(() {
+                    if (!isPositive) {
+                      Alert(
+                        context: context,
+                        type: AlertType.warning,
+                        title: "WARNING",
+                        desc:
+                            "Your Past Locations Will Be Shared. \nAre you sure?",
+                        buttons: [
+                          DialogButton(
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () =>
+                                  {Navigator.pop(context), isPositive = true},
+                              color: Colors.redAccent[100]),
+                          DialogButton(
+                              child: Text(
+                                "No",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              color: Colors.grey[100])
+                        ],
+                      ).show();
+                    }
+                  });
+                },
+          label: Text("Tested Positive",
+              style: TextStyle(
+                  color: isPositive ? Colors.grey[300] : Colors.white))),
     ));
   }
 
@@ -211,7 +203,6 @@ class MapSampleState extends State<MapSample> {
     return new Scaffold(
       floatingActionButton: Stack(
         children: <Widget>[
-          
           Container(
               padding: EdgeInsets.fromLTRB(30, 50, 0, 0),
               child: Align(
@@ -227,7 +218,20 @@ class MapSampleState extends State<MapSample> {
           Container(
               padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
               child: Align(
-                  alignment: Alignment.bottomRight, child: dontTrackButton)),
+                  alignment: Alignment.bottomRight,
+                  child: (Container(
+                    child: FloatingActionButton.extended(
+                      backgroundColor: Colors.blue,
+                      onPressed: () => {
+                        setState(() {
+                         // markers.removeWhere((item) => item.markerId.value == g_markerID.value);
+                         markers.removeWhere((item) => item.markerId.value == g_markerID);
+                        })
+                      },
+                      label: Text("Don't track here"),
+                      heroTag: null,
+                    ),
+                  )))),
         ],
       ),
       body: GoogleMap(
@@ -254,14 +258,15 @@ class MapSampleState extends State<MapSample> {
         origin: lastPos, destination: des, mode: RouteMode.walking);
 
     setState(() {
-
+      var tempID = 'sup' + polid.toString();
       markers.add(Marker(
-                    markerId: MarkerId('sup'+polid.toString()),
-                    infoWindow: InfoWindow(title: "New Location "+polid.toString()),
-                    position: des,
-                    onTap: ()=> {
-                      
-                    }));
+          markerId: MarkerId(tempID),
+          infoWindow: InfoWindow(title: "New Location " + polid.toString()),
+          position: des,
+          onTap: () => {
+                g_markerID = tempID,
+                print('sup' + tempID)
+              }));
 
       lines.add(Polyline(
           polylineId: PolylineId('testr' + polid.toString()),
@@ -290,20 +295,13 @@ class MapSampleState extends State<MapSample> {
     lastPos = LatLng(position.latitude, position.longitude);
 
     Marker marker = Marker(
-        markerId: MarkerId('sup'),
+        markerId: MarkerId('mylocation'),
         infoWindow: InfoWindow(title: "Your Location"),
         position: LatLng(position.latitude, position.longitude),
         draggable: true,
-        onDragEnd: (LatLng endpos) => {
-          
-          print('dropped'), renderPaths(endpos)
-          
+        onDragEnd: (LatLng endpos) => {print('dropped'), renderPaths(endpos)});
 
-
-
-          });
-
-    setState(() { 
+    setState(() {
       markers.add(marker);
     });
 
