@@ -23,30 +23,32 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Email',
-          style: kLabelStyle,
-        ),
+
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
+
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
-              border: InputBorder.none,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Email',
+              hintText: 'Email',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -59,14 +61,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Password',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
+        //    Text(
+        //      'Password',
+        //      style: kLabelStyle,
+        //    ),
+
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          //decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: passwordController,
@@ -76,13 +78,19 @@ class _LoginScreenState extends State<LoginScreen> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Password',
+              hintText: 'Password',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -147,16 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
           {
             handleSignInEmail(emailController.text, passwordController.text)
                 .then((FirebaseUser user) async {
-            await Navigator.pushNamed(context, '/loading');
-            Navigator.pushNamed(context, '/mainpage');
-          }).catchError(
+              await Navigator.pushNamed(context, '/loading');
+              Navigator.pushNamed(context, '/mainpage');
+            }).catchError(
                     (e) => print(e));
           }
 
         },
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         color: Colors.white,
         child: Text(
@@ -223,13 +231,13 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-            () => print('Login with Facebook'),
+                () => print('Login with Facebook'),
             AssetImage(
               'assets/logos/facebook.jpg',
             ),
           ),
           _buildSocialBtn(
-            () => print('Login with Google'),
+                () => print('Login with Google'),
             AssetImage(
               'assets/logos/google.jpg',
             ),
@@ -293,9 +301,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              
+
               DelayedAnimation(
-                              child: Container(
+                child: Container(
                   height: double.infinity,
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),

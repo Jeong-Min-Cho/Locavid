@@ -77,6 +77,10 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans.ttf
+        
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
