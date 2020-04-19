@@ -50,11 +50,13 @@ class WorldMapState extends State<WorldMap> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _centerOnUser();
     });
+    var whiteHouse = LatLng(38.897438, -77.036587);
 
-//    var whiteHouse = LatLng(38.897438, -77.036587);
+
 
     markers.add(Marker(
         markerId: MarkerId('mylocation'),
@@ -109,6 +111,7 @@ class WorldMapState extends State<WorldMap> {
     );
   }
 
+
   Future<void> _centerOnUser() async {
 
     final GoogleMapController controller = await _controller.future;
@@ -119,4 +122,5 @@ class WorldMapState extends State<WorldMap> {
         target: LatLng(position.latitude, position.longitude),
         zoom: 13)));
   }
+
 }
