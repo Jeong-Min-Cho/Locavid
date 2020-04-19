@@ -8,7 +8,9 @@ import 'package:flutter_beautiful_popup/main.dart';
 import 'package:location/location.dart';
 
 import 'package:google_map_polyline/google_map_polyline.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dart:developer';
 
 class MapSample extends StatefulWidget {
   @override
@@ -33,25 +35,33 @@ class MapSampleState extends State<MapSample> {
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
 
   void _showAlert(BuildContext context) async {
-    await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Info'),
-              content: Text("This app tracks your location,"
-                  " but your data will not public until you have tested positive "
-                  "for the virus. If you don't want the app to track your location"
-                  " in specific locaitons, "
-                  "please press the do don't track here button."),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Okay'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
-//    Navigator.pop(context);
+    final prefs = await SharedPreferences.getInstance();
+
+    // only show the alert if it wasn't showed to the user before
+    bool alertViewed = prefs.getBool('alert_viewed') == null ? false : true;
+
+    if(!alertViewed) {
+      prefs.setBool('alert_viewed', true);
+
+      await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Info'),
+            content: Text("This app tracks your location,"
+                " but your data will not public until you have tested positive "
+                "for the virus. If you don't want the app to track your location"
+                " in specific locaitons, "
+                "please press the do don't track here button."),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ));
+    }
   }
 
   getsomePoints() async {
