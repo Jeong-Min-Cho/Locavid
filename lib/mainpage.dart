@@ -301,6 +301,7 @@ class MapSampleState extends State<MapSample> {
                       heroTag: null,
                     ),
                   )))),
+                  
           GestureDetector(
             onTap: () {
               setCameraToMe();
@@ -336,23 +337,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  void removeMarker() {
-    //markers.removeAll(Marker());
-  }
 
-  renderPathsOrigin(LatLng origin, LatLng des, int id) async {
-    var temp = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: origin, destination: des, mode: RouteMode.walking);
-
-    lines.add(Polyline(
-        polylineId: PolylineId('hardcode'),
-        visible: true,
-        points: temp,
-        width: 3,
-        color: Colors.redAccent[300],
-        startCap: Cap.roundCap,
-        endCap: Cap.buttCap));
-  }
 
   renderPaths(LatLng des) async {
     var temp = await googleMapPolyline.getCoordinatesWithLocation(
@@ -488,6 +473,6 @@ class MapSampleState extends State<MapSample> {
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+   // timer.cancel();
   }
 }
