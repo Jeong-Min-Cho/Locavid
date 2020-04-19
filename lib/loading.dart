@@ -8,7 +8,7 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getWelcomePage() {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 0), () {
       Navigator.pop(context);
     });
   }
