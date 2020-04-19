@@ -1,2 +1,11 @@
 # Locavid
-An App shares your location with your agreement when you get infected to display your past locations to prevent spreading COVID-19
+An app that lets you see the routes infected people have taken so that you can protect from the virus better.
+
+## Running Instructions
+
+Welcome.dart is the entry point.
+
+## About
+
+Made by [@e2slayer](https://e2slayer.github.io/), [@etasbasi](http://etasbasi.com), and [@shixiaoqing](https://github.com/shixiaoqing) with 💚 and Flutter.
+
