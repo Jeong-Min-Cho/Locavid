@@ -37,6 +37,8 @@ dependencies:
 
   shared_preferences: 0.5.6
   random_color: ^1.0.5
+
+  rflutter_alert: ^1.0.3
  
   # dummy package to test https://github.com/NearHuscarl/flutter_login/issues/35
   provider: ^4.0.1

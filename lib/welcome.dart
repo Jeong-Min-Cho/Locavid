@@ -10,6 +10,7 @@ import 'package:locavid/worldmap.dart';
 void main() {
   runApp(MaterialApp(
     title: 'Routes test',
+    debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {
       '/': (context) => MyApp(),
