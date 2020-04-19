@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math';
 
@@ -47,6 +48,11 @@ class WorldMapState extends State<WorldMap> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _centerOnUser();
+    });
+
 
     markers.add(Marker(
         markerId: MarkerId('mylocation'),
@@ -148,8 +154,14 @@ class WorldMapState extends State<WorldMap> {
     );
   }
 
-  Future<void> _goToTheLake() async {
+  Future<void> _centerOnUser() async {
+
     final GoogleMapController controller = await _controller.future;
-    //controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 13)));
   }
 }
