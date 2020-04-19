@@ -382,6 +382,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _centerOnUser() async {
+  final geolocator = Geolocator()..forceAndroidLocationManager = true;
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
@@ -444,9 +445,12 @@ class MapSampleState extends State<MapSample> {
       counter = map.length;
     });
 
-    timer = Timer.periodic(new Duration(seconds: 10), (timer) async {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    try {
+
+     timer = Timer.periodic(new Duration(seconds: 10), (timer) async {
+
+        Position position = await Geolocator()
+            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
       final GoogleMapController controller = await _controller.future;
 
@@ -472,14 +476,18 @@ class MapSampleState extends State<MapSample> {
       counter++;
 
       setState(() {
-        markers.add(marker);
+          markers.add(marker);
+        });
       });
-    });
-  }
+
+      } catch(e) {
+       print(e);
+      }
+    }
 
   @override
   void dispose() {
     super.dispose();
-    //timer.cancel();
+    timer.cancel();
   }
 }
