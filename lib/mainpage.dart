@@ -201,9 +201,16 @@ class MapSampleState extends State<MapSample> {
 
     final GoogleMapController controller = await _controller.future;
 
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: 17)));
+//    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+//        target: LatLng(position.latitude, position.longitude),
+//        zoom: 17)));
+//    _permissionGranted = await location.hasPermission();
+//    if (_permissionGranted == PermissionStatus.denied) {
+//      _permissionGranted = await location.requestPermission();
+//      if (_permissionGranted != PermissionStatus.granted) {
+//        return;
+//      }
+//    }
 
     Marker marker = Marker(
       markerId: MarkerId('sup'),

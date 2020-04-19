@@ -7,6 +7,8 @@ import 'dart:math';
 
 import 'package:google_map_polyline/google_map_polyline.dart';
 
+import 'package:random_color/random_color.dart';
+
 class WorldMap extends StatefulWidget {
   @override
   State<WorldMap> createState() => WorldMapState();
@@ -14,8 +16,6 @@ class WorldMap extends StatefulWidget {
 
 class WorldMapState extends State<WorldMap> {
   Completer<GoogleMapController> _controller = Completer();
-
-  List<LatLng> routeCoords;
 
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
@@ -25,107 +25,62 @@ class WorldMapState extends State<WorldMap> {
   //38.897438, -77.036587 White House
   static final CameraPosition _whiteHouse = CameraPosition(
     target: LatLng(38.897438, -77.036587),
-    zoom: 13.0,
+    zoom: 12.5,
   );
 
-  getsomePoints(LatLng origin, LatLng des) async {
+  getsomePoints(LatLng origin, LatLng des, int polyid) async {
     var temp = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: origin, destination: des, mode: RouteMode.driving);
+        origin: origin, destination: des, mode: RouteMode.walking);
 
-        print('are we here ?');
+    RandomColor _randomColor = RandomColor();
 
-
-        lines.add(Polyline(
-          polylineId: PolylineId('testr'),
+    Color _color = _randomColor.randomColor();
+    setState(() {
+      lines.add(Polyline(
+          polylineId: PolylineId('testr' + polyid.toString()),
           visible: true,
           points: temp,
-          width: 2,
-          color: Colors.red,
+          width: 3,
+          color: _color,
           startCap: Cap.roundCap,
           endCap: Cap.buttCap));
+    });
   }
 
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _centerOnUser();
     });
 
+//    var whiteHouse = LatLng(38.897438, -77.036587);
 
     markers.add(Marker(
         markerId: MarkerId('mylocation'),
-        infoWindow: InfoWindow(title: 'title', snippet: 'hello'),
-        position: LatLng(38.988827, -77.472091),
+        infoWindow: InfoWindow(title: 'White House', snippet: 'hello'),
+        position: LatLng(38.897438, -77.036587),
         onTap: () => {}));
-    var listColors = [
-      Colors.accents,
-      Colors.amber,
-      Colors.black,
-      Colors.blue,
-      Colors.red,
-      Colors.orange,
-      Colors.green,
-      Colors.deepOrange,
-      Colors.white,
-      Colors.green
-    ];
 
-    for (int j = 0; j < 2; ++j) {
-      //Color tempColor = listColors[j];
-      Polyline temp = new Polyline(
-        points: [],
-        endCap: Cap.squareCap,
-        width: 2,
-        color: Colors.grey,
-        geodesic: false,
-        polylineId: PolylineId("line_one"),
-      );
-      //int randomNum = rng.nextInt(200000) % 200000 + (-100000);
+    for (int j = 0; j < 50; j++) {
       var rng = new Random(); // Random Dummy Data
 
-      // for (var i = 0; i < 2; i++) {
-      //   double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
-      //   temp.points.add(LatLng(38.988827 + tempd, -77.472091 + (i / 40).toDouble()));
+      double negative = 1.0;
+      if (rng.nextInt(1) == 0) {
+        negative *= -1.0;
+      }
 
-      //   //print('added' + (38.988827 + tempd).toString() + ' / ' + (-77.472091+ tempd).toString());
-      // }
-        double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+      double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.0000003;
+      double tempd2 = (rng.nextInt(200000) % 200000 + (-100000)) * 0.0000003;
+      tempd *= negative;
 
-        double tempd2 = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
-
-
-
-      getsomePoints(LatLng(38.988827 + tempd, -77.472091 + (1 / 40).toDouble()) , LatLng(38.988827 + tempd2, -77.472091 + (1 / 40).toDouble()) );
-      
-
-
-      //print('Length ' + temp.points.length.toString());
-     // lines.add(temp);
+      getsomePoints(
+          LatLng(whiteHouse.latitude + tempd,
+              whiteHouse.longitude + (1 / 40).toDouble() * negative),
+          LatLng(whiteHouse.latitude + tempd2,
+              whiteHouse.longitude + (1 / 40).toDouble()),
+          j);
     }
-    // lines.add(
-    //   Polyline(
-    //     points: [
-    //       LatLng(38.988827, -77.472091),
-    //       LatLng(38.980821, -77.470815),
-    //       LatLng(38.969406, -77.471301)
-    //     ],
-    //     endCap: Cap.squareCap,
-    //     width: 2,
-    //     geodesic: false,
-    //     polylineId: PolylineId("line_one"),
-    //   ),
-    // );
-
-    // lines.add(
-    //   Polyline(
-    //     points: [LatLng(38.949798, -77.470534), LatLng(38.938614, -77.469379)],
-    //     color: Colors.amber,
-    //     width: 2,
-    //     polylineId: PolylineId("line_one"),
-    //   ),
-    // );
   }
 
   @override
