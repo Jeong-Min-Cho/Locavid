@@ -24,24 +24,38 @@ class WorldMapState extends State<WorldMap> {
   //38.897438, -77.036587 White House
   static final CameraPosition _whiteHouse = CameraPosition(
     target: LatLng(38.897438, -77.036587),
-    zoom: 13.0,
+    zoom: 12.0,
   );
 
-  getsomePoints(LatLng origin, LatLng des) async {
+  getsomePoints(LatLng origin, LatLng des, int polyid) async {
     var temp = await googleMapPolyline.getCoordinatesWithLocation(
         origin: origin, destination: des, mode: RouteMode.driving);
 
         print('are we here ?');
+       List listColors = [
+      Colors.indigo[100],
+      Colors.amber[100],
+      Colors.black,
+      Colors.blue[100],
+      Colors.red[100],
+      Colors.orange[100],
+      Colors.green[100],
+      Colors.deepOrange[100],
+      Colors.white,
+      Colors.green[100]
+    ];
 
-
+      setState(() {
         lines.add(Polyline(
-          polylineId: PolylineId('testr'),
+          polylineId: PolylineId('testr'+polyid.toString()),
           visible: true,
           points: temp,
           width: 2,
-          color: Colors.red,
+          color: Colors.red[300],
           startCap: Cap.roundCap,
           endCap: Cap.buttCap));
+      });
+        
   }
 
   @override
@@ -50,23 +64,12 @@ class WorldMapState extends State<WorldMap> {
 
     markers.add(Marker(
         markerId: MarkerId('mylocation'),
-        infoWindow: InfoWindow(title: 'title', snippet: 'hello'),
-        position: LatLng(38.988827, -77.472091),
+        infoWindow: InfoWindow(title: 'White House', snippet: 'hello'),
+        position: LatLng(38.897438, -77.036587),
         onTap: () => {}));
-    var listColors = [
-      Colors.accents,
-      Colors.amber,
-      Colors.black,
-      Colors.blue,
-      Colors.red,
-      Colors.orange,
-      Colors.green,
-      Colors.deepOrange,
-      Colors.white,
-      Colors.green
-    ];
+   
 
-    for (int j = 0; j < 2; ++j) {
+    for (int j = 0; j < 5; j++) {
       //Color tempColor = listColors[j];
       Polyline temp = new Polyline(
         points: [],
@@ -79,19 +82,29 @@ class WorldMapState extends State<WorldMap> {
       //int randomNum = rng.nextInt(200000) % 200000 + (-100000);
       var rng = new Random(); // Random Dummy Data
 
+      double negative = 1.0;
+      if (rng.nextInt(1) == 0)
+      {
+        negative *= -1.0;
+
+      }
+
       // for (var i = 0; i < 2; i++) {
       //   double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
       //   temp.points.add(LatLng(38.988827 + tempd, -77.472091 + (i / 40).toDouble()));
 
       //   //print('added' + (38.988827 + tempd).toString() + ' / ' + (-77.472091+ tempd).toString());
       // }
-        double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+        double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000005;
 
-        double tempd2 = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+        double tempd2 = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000005;
 
+        tempd*= negative;
+        tempd2*= negative;
 
+//38.897438, -77.036587
 
-      getsomePoints(LatLng(38.988827 + tempd, -77.472091 + (1 / 40).toDouble()) , LatLng(38.988827 + tempd2, -77.472091 + (1 / 40).toDouble()) );
+      getsomePoints(LatLng(38.897438 + tempd, -77.036587 + (1 / 40).toDouble()) , LatLng(38.897438 + tempd2, -77.036587 + (1 / 40).toDouble()), j);
       
 
 

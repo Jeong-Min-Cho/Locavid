@@ -154,7 +154,7 @@ class MapSampleState extends State<MapSample> {
       if (_permissionGranted != PermissionStatus.granted) {
         return;
       }
-    }
+    } 
 
     _locationData = await location.getLocation();
 
