@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math';
 
+import 'package:google_map_polyline/google_map_polyline.dart';
+
 class WorldMap extends StatefulWidget {
   @override
   State<WorldMap> createState() => WorldMapState();
@@ -12,6 +14,11 @@ class WorldMap extends StatefulWidget {
 class WorldMapState extends State<WorldMap> {
   Completer<GoogleMapController> _controller = Completer();
 
+  List<LatLng> routeCoords;
+
+  GoogleMapPolyline googleMapPolyline =
+      new GoogleMapPolyline(apiKey: "AIzaSyDvcAyoUGWsegpT_SsSN3S7orGaGam2kaM");
+
   Set<Marker> markers = {};
   Set<Polyline> lines = {};
   //38.897438, -77.036587 White House
@@ -19,6 +26,23 @@ class WorldMapState extends State<WorldMap> {
     target: LatLng(38.897438, -77.036587),
     zoom: 13.0,
   );
+
+  getsomePoints(LatLng origin, LatLng des) async {
+    var temp = await googleMapPolyline.getCoordinatesWithLocation(
+        origin: origin, destination: des, mode: RouteMode.driving);
+
+        print('are we here ?');
+
+
+        lines.add(Polyline(
+          polylineId: PolylineId('testr'),
+          visible: true,
+          points: temp,
+          width: 2,
+          color: Colors.red,
+          startCap: Cap.roundCap,
+          endCap: Cap.buttCap));
+  }
 
   @override
   void initState() {
@@ -29,30 +53,50 @@ class WorldMapState extends State<WorldMap> {
         infoWindow: InfoWindow(title: 'title', snippet: 'hello'),
         position: LatLng(38.988827, -77.472091),
         onTap: () => {}));
+    var listColors = [
+      Colors.accents,
+      Colors.amber,
+      Colors.black,
+      Colors.blue,
+      Colors.red,
+      Colors.orange,
+      Colors.green,
+      Colors.deepOrange,
+      Colors.white,
+      Colors.green
+    ];
 
-    for (int j = 0; j < 10; ++j) {
-      //List<Colors> listColors = { Colors.accents, Colors.amber, Colors.black, Colors.blue, Colors.red, Colors.orange, Colors.green, Colors.deepOrange, Colors.white, Colors.green}; 
-
+    for (int j = 0; j < 2; ++j) {
+      //Color tempColor = listColors[j];
       Polyline temp = new Polyline(
         points: [],
         endCap: Cap.squareCap,
         width: 2,
-        color: Colors.black,
+        color: Colors.grey,
         geodesic: false,
         polylineId: PolylineId("line_one"),
       );
       //int randomNum = rng.nextInt(200000) % 200000 + (-100000);
       var rng = new Random(); // Random Dummy Data
-      for (var i = 0; i < 10; i++) {
-        double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
-        temp.points
-            .add(LatLng(38.988827 + tempd, -77.472091 + (i / 40).toDouble()));
 
-        //print('added' + (38.988827 + tempd).toString() + ' / ' + (-77.472091+ tempd).toString());
-      }
+      // for (var i = 0; i < 2; i++) {
+      //   double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+      //   temp.points.add(LatLng(38.988827 + tempd, -77.472091 + (i / 40).toDouble()));
+
+      //   //print('added' + (38.988827 + tempd).toString() + ' / ' + (-77.472091+ tempd).toString());
+      // }
+        double tempd = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+
+        double tempd2 = (rng.nextInt(200000) % 200000 + (-100000)) * 0.000001;
+
+
+
+      getsomePoints(LatLng(38.988827 + tempd, -77.472091 + (1 / 40).toDouble()) , LatLng(38.988827 + tempd2, -77.472091 + (1 / 40).toDouble()) );
+      
+
 
       //print('Length ' + temp.points.length.toString());
-      lines.add(temp);
+     // lines.add(temp);
     }
     // lines.add(
     //   Polyline(

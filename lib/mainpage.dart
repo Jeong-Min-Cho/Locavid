@@ -9,7 +9,6 @@ import 'package:location/location.dart';
 
 import 'package:google_map_polyline/google_map_polyline.dart';
 
-import 'package:extended_navbar_scaffold/extended_navbar_scaffold.dart';
 
 class MapSample extends StatefulWidget {
   @override
