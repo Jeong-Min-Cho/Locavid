@@ -72,7 +72,7 @@ flutter pub get
 
 7. Put your Google API key in libs/Mainpage.dart and worldmap.dart
 ```dart
-GoogleMapPolyline googleMapPolyline =new GoogleMapPolyline(apiKey: "YOUR_KEY_HERE");
+GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "YOUR_KEY_HERE");
 ```
 
 8. If your `launch.json` cannot find the program to start, add this line inside of `configurations` in `launch.json`
@@ -84,6 +84,13 @@ GoogleMapPolyline googleMapPolyline =new GoogleMapPolyline(apiKey: "YOUR_KEY_HER
 
 Set your device to an emulator or phyiscal phone.
 After that, you may compile Locavid.
+
+Use the information below to sign-in !
+
+```
+Username: test@test.com
+Password: password
+```
 
 
 <!-- ROADMAP -->
