@@ -19,12 +19,14 @@
     ·
     <a href="https://github.com/E2Slayer/Locavid/issues">Report Bug</a>
     ·
-    <a href="hhttps://github.com/E2Slayer/Locavid/issues">Request Feature</a>
+    <a href="https://github.com/E2Slayer/Locavid/issues">Request Feature</a>
+     ·
+    <a href="https://devpost.com/software/locavid">Devpost Link</a>
   
   </p>
 </p>
 
-# Locavid
+# Locavid 
 An app that lets you see the routes infected people have taken so that you can protect from the virus better.
 
 
@@ -78,7 +80,7 @@ GoogleMapPolyline googleMapPolyline =new GoogleMapPolyline(apiKey: "YOUR_KEY_HER
 "program": "lib/welcome.dart"
 ```
 
-9. You are Ready to Start Locavid!
+9. You are Ready to Start Locavid! 👍
 
 Set your device to an emulator or phyiscal phone.
 After that, you may compile Locavid.
@@ -101,13 +103,21 @@ See the [open issues](https://github.com/E2Slayer/Locavid/) for a list of propos
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.👌
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/locavid`)
 3. Commit your Changes (`git commit -m 'Add some locavid'`)
 4. Push to the Branch (`git push origin feature/locavid`)
 5. Open a Pull Request
+
+## DevPost
+
+[Locavid Devpost Link](https://devpost.com/software/locavid)
+
+You may find more details on our Devpost, too!
+
+Please, show us some love💕 on our Devpost! 
 
 
 <!-- CONTACT -->
