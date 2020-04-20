@@ -1,8 +1,10 @@
+![GitHub Logo](/images/login_original.png)
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
+  
   <a href="https://github.com/E2Slayer/Locavid">
-    <img src="images/small_logo.png" alt="Logo" width="80" height="80">
+    <img src="images/login_original.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Locavid</h3>
@@ -21,12 +23,17 @@
   </p>
 </p>
 
+# Locavid
+An app that lets you see the routes infected people have taken so that you can protect from the virus better.
+
+
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/loginpage.png" alt="Logo">
+  <a href="https://github.com/E2Slayer/Locavid">
+    <img src="images/login_original.png" alt="Logo">
   </a>
+ 
 
 ### Inspiration
   In this day and age an infectious disease can easily spread across the world causing a pandemic. Both developing and developed countries are suffering the repercussions of COVID-19. Many people believed that Western countries were prepared for the possibility of a pandemic, but in truth they were not. Other countries like South Korea however, are effectively fighting against the spread of COVID-19. One interesting and effective strategy employed by the South Korean government is releasing past location information of confirmed patients. As shown by South Korea, this is a viable solution but many countries cannot do the same thing due to privacy concerns. Inspired by this concept, we have developed an app that will implement this idea without invading upon people’s privacy.
@@ -34,13 +41,6 @@
 ### What it does
   Locavid tracks the locations of users spanning back a week. It enables the users to view paths taken by people that have since tested positive for COVID-19 or other contagious viruses. Should users test positive they are able to share the paths that they have taken with their friends and family, and with the user’s permission they can anonymously share their data and contribute to the global map for the general social good. Most importantly, Locavid can help users avoid potential COVID-19 hotzones as well as helping their friends and other users avoid them as well, thus lowering the infection rate. 
 
-
-# Locavid
-An app that lets you see the routes infected people have taken so that you can protect from the virus better.
-
-## Running Instructions
-
-Welcome.dart is the entry point.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -74,7 +74,57 @@ flutter pub get
 ```dart
 GoogleMapPolyline googleMapPolyline =new GoogleMapPolyline(apiKey: "YOUR_KEY_HERE");
 ```
-## About
 
-Made by [@e2slayer](https://e2slayer.github.io/), [@etasbasi](http://etasbasi.com), and [@shixiaoqing](https://github.com/shixiaoqing) with 💚 and Flutter.
+8. If your `launch.json` cannot find the program to start, add this line inside of `configurations` in `launch.json`
+```json
+"program": "lib/welcome.dart"
+```
+
+9. You are Ready to Start Locavid!
+
+Set your device to an emulator or phyiscal phone.
+After that, you may compile Locavid.
+
+
+<!-- ROADMAP -->
+## Technologies Used
+
+* [Flutter](https://flutter.dev/docs/get-started/install)
+* [Android Studio](https://developer.android.com/studio?hl=nl)
+* [FireBase](https://firebase.google.com/)
+* [Figma](https://www.figma.com/)
+
+<!-- ROADMAP -->
+## Roadmap
+
+See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/locavid`)
+3. Commit your Changes (`git commit -m 'Add some locavid'`)
+4. Push to the Branch (`git push origin feature/locavid`)
+5. Open a Pull Request
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+<!-- CONTACT -->
+## Contact
+
+Jeong Min Cho [@E2Slayer](https://e2slayer.github.io/) - jeongmincho@outlook.com
+
+Enes Tasbasi [@etasbasi](http://etasbasi.com)
+
+Helen Shi [@shixiaoqing](https://github.com/shixiaoqing)
 
