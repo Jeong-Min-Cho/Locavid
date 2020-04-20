@@ -1,13 +1,8 @@
-import 'dart:math';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'dart:async';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_beautiful_popup/main.dart';
 
 //import 'package:location/location.dart';
 
@@ -15,8 +10,6 @@ import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rflutter_alert/rflutter_alert.dart';
-
-import 'dart:developer';
 
 class MapSample extends StatefulWidget {
   @override
@@ -86,21 +79,37 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
+  getPathsBetween(LatLng origin, LatLng des, int id, Color _color) async {
+    setState(() async {
+      lines.add(Polyline(
+          polylineId: PolylineId('testr' + id.toString()),
+          visible: true,
+          points: await googleMapPolyline.getCoordinatesWithLocation(
+              origin: origin, destination: des, mode: RouteMode.walking),
+          width: 3,
+          color: _color,
+          startCap: Cap.roundCap,
+          endCap: Cap.buttCap));
+    });
+  }
+
   getsomePoints() async {
-    routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: LatLng(38.833799, -77.313717),
-        destination: LatLng(38.756273, -77.523046),
-        mode: RouteMode.driving);
+    // getPathsBetween(LatLng(38.771544, -77.506261), LatLng(38.771544, -77.438502), 3, Colors.red[300]);
 
-    routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: LatLng(38.756273, -77.523046),
-        destination: LatLng(38.771544, -77.506261),
-        mode: RouteMode.driving);
+    // routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
+    //     origin: LatLng(38.833799, -77.313717),
+    //     destination: LatLng(38.756273, -77.523046),
+    //     mode: RouteMode.driving);
 
-    routeCoords3 = await googleMapPolyline.getCoordinatesWithLocation(
-        origin: LatLng(38.771544, -77.506261),
-        destination: LatLng(38.836880, -77.438502),
-        mode: RouteMode.driving);
+    // routeCoords2 = await googleMapPolyline.getCoordinatesWithLocation(
+    //     origin: LatLng(38.756273, -77.523046),
+    //     destination: LatLng(38.771544, -77.506261),
+    //     mode: RouteMode.driving);
+
+    // routeCoords3 = await googleMapPolyline.getCoordinatesWithLocation(
+    //     origin: LatLng(38.771544, -77.506261),
+    //     destination: LatLng(38.836880, -77.438502),
+    //     mode: RouteMode.driving);
 
     // renderPathsOrigin(LatLng(38.836880, -77.438502), LatLng(38.771544, -77.506261), 1 );
   }
@@ -113,6 +122,11 @@ class MapSampleState extends State<MapSample> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showAlert(context);
       _centerOnUser();
+
+      getPathsBetween(LatLng(38.756273, -77.523046),
+          LatLng(38.836880, -77.438502), 1, Colors.red[300]);
+      getPathsBetween(LatLng(38.836880, -77.438502),
+          LatLng(38.771544, -77.506261), 2, Colors.red[300]);
 
       if (!isAlerted) {
         Alert(
@@ -136,7 +150,7 @@ class MapSampleState extends State<MapSample> {
       }
     });
 
-    getsomePoints();
+    //getsomePoints();
 
     Marker resultMarker0 = Marker(
       markerId: MarkerId('testt1'),
@@ -301,7 +315,6 @@ class MapSampleState extends State<MapSample> {
                       heroTag: null,
                     ),
                   )))),
-                  
           GestureDetector(
             onTap: () {
               setCameraToMe();
@@ -337,8 +350,6 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-
-
   renderPaths(LatLng des) async {
     var temp = await googleMapPolyline.getCoordinatesWithLocation(
         origin: lastPos, destination: des, mode: RouteMode.walking);
@@ -367,7 +378,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> _centerOnUser() async {
-  final geolocator = Geolocator()..forceAndroidLocationManager = true;
+    final geolocator = Geolocator()..forceAndroidLocationManager = true;
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
@@ -401,23 +412,23 @@ class MapSampleState extends State<MapSample> {
     //     startCap: Cap.roundCap,
     //     endCap: Cap.buttCap));
 
-    lines.add(Polyline(
-        polylineId: PolylineId('route2'),
-        visible: true,
-        points: routeCoords2,
-        width: 4,
-        color: Colors.red[300],
-        startCap: Cap.roundCap,
-        endCap: Cap.buttCap));
+    // lines.add(Polyline(
+    //     polylineId: PolylineId('route2'),
+    //     visible: true,
+    //     points: routeCoords2,
+    //     width: 4,
+    //     color: Colors.red[300],
+    //     startCap: Cap.roundCap,
+    //     endCap: Cap.buttCap));
 
-    lines.add(Polyline(
-        polylineId: PolylineId('route3'),
-        visible: true,
-        points: routeCoords3,
-        width: 4,
-        color: Colors.red,
-        startCap: Cap.roundCap,
-        endCap: Cap.buttCap));
+    // lines.add(Polyline(
+    //     polylineId: PolylineId('route3'),
+    //     visible: true,
+    //     points: routeCoords3,
+    //     width: 4,
+    //     color: Colors.red,
+    //     startCap: Cap.roundCap,
+    //     endCap: Cap.buttCap));
   }
 
   Timer timer;
@@ -431,48 +442,45 @@ class MapSampleState extends State<MapSample> {
     });
 
     try {
-
-     timer = Timer.periodic(new Duration(seconds: 10), (timer) async {
-
+      timer = Timer.periodic(new Duration(seconds: 10), (timer) async {
         Position position = await Geolocator()
             .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-      final GoogleMapController controller = await _controller.future;
+        final GoogleMapController controller = await _controller.future;
 
-      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(position.latitude, position.longitude), zoom: 17)));
+        controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+            target: LatLng(position.latitude, position.longitude), zoom: 17)));
 
-      var date = new DateTime.now();
-      String formattedTime =
-          '${date.month}/${date.day}/${date.year} ${date.hour}:${date.minute}';
+        var date = new DateTime.now();
+        String formattedTime =
+            '${date.month}/${date.day}/${date.year} ${date.hour}:${date.minute}';
 
-      Marker marker = Marker(
-        markerId: MarkerId(counter.toString()),
-        infoWindow: InfoWindow(title: formattedTime),
-        position: LatLng(position.latitude, position.longitude),
-      );
+        Marker marker = Marker(
+          markerId: MarkerId(counter.toString()),
+          infoWindow: InfoWindow(title: formattedTime),
+          position: LatLng(position.latitude, position.longitude),
+        );
 
-      firebase.reference().child("test").child(counter.toString()).set({
-        'latitude': position.latitude,
-        'longitude': position.longitude,
-        'time': formattedTime
-      });
+        firebase.reference().child("test").child(counter.toString()).set({
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'time': formattedTime
+        });
 
-      counter++;
+        counter++;
 
-      setState(() {
+        setState(() {
           markers.add(marker);
         });
       });
-
-      } catch(e) {
-       print(e);
-      }
+    } catch (e) {
+      print(e);
     }
+  }
 
   @override
   void dispose() {
     super.dispose();
-   // timer.cancel();
+    // timer.cancel();
   }
 }
