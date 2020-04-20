@@ -1,10 +1,10 @@
-![GitHub Logo](/images/login_original.png)
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   
   <a href="https://github.com/E2Slayer/Locavid">
-    <img src="images/login_original.png" alt="Logo" width="80" height="80">
+    <img src="images/logo_original.png" alt="Logo">
   </a>
 
   <h3 align="center">Locavid</h3>
@@ -30,10 +30,7 @@ An app that lets you see the routes infected people have taken so that you can p
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-  <a href="https://github.com/E2Slayer/Locavid">
-    <img src="images/login_original.png" alt="Logo">
-  </a>
- 
+<img src="images/loginpage.jpg" alt="Logo" width="260" height="555">
 
 ### Inspiration
   In this day and age an infectious disease can easily spread across the world causing a pandemic. Both developing and developed countries are suffering the repercussions of COVID-19. Many people believed that Western countries were prepared for the possibility of a pandemic, but in truth they were not. Other countries like South Korea however, are effectively fighting against the spread of COVID-19. One interesting and effective strategy employed by the South Korean government is releasing past location information of confirmed patients. As shown by South Korea, this is a viable solution but many countries cannot do the same thing due to privacy concerns. Inspired by this concept, we have developed an app that will implement this idea without invading upon people’s privacy.
@@ -68,7 +65,7 @@ flutter pub get
 ```
 6. Follow the instruction for setting up Google Maps API
 
-[Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
+[Google Maps Flutter Installation](https://pub.dev/packages/google_maps_flutter)
 
 7. Put your Google API key in libs/Mainpage.dart and worldmap.dart
 ```dart
