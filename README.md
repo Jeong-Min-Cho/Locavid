@@ -15,11 +15,12 @@
     <a href="https://github.com/E2Slayer/Locavid"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/E2Slayer/Locavid">View Demo</a>
+    <a href="https://www.youtube.com/watch?v=dB-69tWjUGs">View Demo(Youtube)</a>
     ·
     <a href="https://github.com/E2Slayer/Locavid/issues">Report Bug</a>
     ·
     <a href="hhttps://github.com/E2Slayer/Locavid/issues">Request Feature</a>
+  
   </p>
 </p>
 
@@ -30,7 +31,7 @@ An app that lets you see the routes infected people have taken so that you can p
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="images/loginpage.jpg" alt="Logo" width="260" height="555">
+<img src="images/phonescreens.png" alt="PhoneScreens" max-width:50 max-height:50>
 
 ### Inspiration
   In this day and age an infectious disease can easily spread across the world causing a pandemic. Both developing and developed countries are suffering the repercussions of COVID-19. Many people believed that Western countries were prepared for the possibility of a pandemic, but in truth they were not. Other countries like South Korea however, are effectively fighting against the spread of COVID-19. One interesting and effective strategy employed by the South Korean government is releasing past location information of confirmed patients. As shown by South Korea, this is a viable solution but many countries cannot do the same thing due to privacy concerns. Inspired by this concept, we have developed an app that will implement this idea without invading upon people’s privacy.
