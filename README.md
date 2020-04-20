@@ -95,7 +95,7 @@ After that, you may compile Locavid.
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/E2Slayer/Locavid/) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTING -->
@@ -110,13 +110,6 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -125,4 +118,10 @@ Jeong Min Cho [@E2Slayer](https://e2slayer.github.io/) - jeongmincho@outlook.com
 Enes Tasbasi [@etasbasi](http://etasbasi.com)
 
 Helen Shi [@shixiaoqing](https://github.com/shixiaoqing)
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
 
